@@ -5,7 +5,10 @@ import Gold from './gold.png'
 import ChestBox from './chest_box.png'
 import CaveMan from './caveMan.png'
 import Energy from './energy.png'
+import { useState } from "react";
 function App() {
+
+  const [isStarted, setIsStarted] = useState(false)
   const list = [
     {id:0,name: '10K Gold', img: Gold, chance:1},
     {id:1,name: '1x Warrior', img: CaveMan,chance:1},
@@ -68,7 +71,7 @@ const getIndexofSelected = () => {
       initialSpeed={150}
       itemStyle={(item, index, isActive) => {
         return {
-          background: item.color,
+          background: isActive && isStarted? "#fff" : item.color,
           display:'flex',
         justifyContent:'center',
         alignItems:'center',
@@ -90,14 +93,16 @@ const getIndexofSelected = () => {
       }}
       onLotteryStart={(complete, state) => {
         const number = getIndexofSelected();
-          console.log('nnnn', number)
+        setIsStarted(true);
         setTimeout(() => {
          
           complete(number)
         }, 4000);
       }}
       onLotteryComplete={(index, item) => {
-        alert('You have won ', item.name)
+        console.log(item)
+       // setIsStarted(false);
+        alert(`You have won ${item.name}`) 
       }}
     />
        
